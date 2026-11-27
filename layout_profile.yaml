@@ -1,0 +1,12 @@
+# 前漢書文淵閣本（988g89tszv）版式档案草稿：只写事实，试跑叠图后再改。
+# 来源：ai-team 全书整理/汉书/体检单-2026-11-27.md
+layout_profile:
+  script: 写本                  # 同史记，四库馆臣手写
+  grid: free
+  slots_per_col: null           # 名义 21（殆知阁 geom cap=21、ncol=8，每叶 16 列）
+  jiazhu:
+    rows: independent           # 双行小注（颜师古注）占整理本列的约 65%，比史记重得多
+    uneven_count: true
+  page_kinds: [body, table]     # 表页集中在册 5–11（卷十三至二十）；册 1 含目录页
+  reference: 殆知阁（daizhige），0249–0251，不含班馬異同附书；整理本 54,327 列、147 万字、缺字占位 120
+  src_w: 1600                   # 国内书影宽，文渊阁整套 1600
