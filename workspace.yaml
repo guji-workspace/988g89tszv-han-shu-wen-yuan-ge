@@ -4,7 +4,7 @@ id: 988g89tszv
 # A/B 实验：A＝接史记库（988g3f0wsu human 刻例，scope: human，钉快照号），B＝只用本书自建库；
 # 先行册 2、6、26 各跑一遍，用字形库自检、放行率、错放数比较，证据写 日志.md 再定。实验前不借库。
 glyph_lib:
-  auto_backfill: false
+  auto_backfill: true    # 11-27 用户定：文渊阁一套写本共用一个库，匹配上（参校本＋库）的放行格直接回库，不再逐字人审
   text_check: report
   # A 组（11-27 CV3 定）：只借史记 g30 的人裁刻例（scope: human，不借 7 万条里 4.5 万机器补例）；B 组基线为不写 borrow。
   borrow:
