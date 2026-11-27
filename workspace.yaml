@@ -6,3 +6,6 @@ id: 988g89tszv
 glyph_lib:
   auto_backfill: false
   text_check: report
+  # A 组（11-27 CV3 定）：只借史记 g30 的人裁刻例（scope: human，不借 7 万条里 4.5 万机器补例）；B 组基线为不写 borrow。
+  borrow:
+    - {from: 988g3f0wsu, scope: human, pin: 30}
