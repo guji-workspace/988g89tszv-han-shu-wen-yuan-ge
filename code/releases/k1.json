@@ -1,0 +1,17 @@
+{
+ "digest": "2094d59aedf0b75cfe39d01a86f329bfb8a423c66cbf97d83e55592ad57bff24",
+ "files": {
+  "code.yaml": "0bdc8fea5d15ac16a0767c2794be366522e20852b0a0177e43d6d879df3ea6ea",
+  "defaults.yaml": "bd3601d3b605b9a9a3c9647000ba2476c54eead72c5250fa87e7634c12c31507",
+  "follow_ref_rival.py": "f5f869077478ac28cf5d56eca648964b16635348e249ac4dfd82a838a6e9cda7",
+  "jiazhu_step.py": "a670f9a959c7f58cb10046706d86d72d3940aa6536550dea859d79a9e1b079c7",
+  "patch_clean.py": "1b3407e84ed821a62c4b6260a7270d52ee8d6ec6dc04587756b5fe1f34d976a6",
+  "roster_glyph.py": "27d19ec7a4547ee61df0f53fa00804c4fdd819482394f13a37d82b8c7dec8d89",
+  "roster_segment.py": "4f502a9398cd424151de95e4a74b2ba87c1071b2740d3be316b5c79499763bfe",
+  "samples.yaml": "66d2ec6638baf8a50437cd0fa630d6ee055361f8adae1aefa6ac1e779a42fbdd",
+  "seal_ink.py": "ae304a193782d3096bcfbeeacd714a6487ff55df8792b518384e043303c3748b"
+ },
+ "k": 1,
+ "note": "",
+ "tested_cv": "dev+g7e46ae702883"
+}

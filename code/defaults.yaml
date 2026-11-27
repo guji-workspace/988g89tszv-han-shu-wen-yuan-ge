@@ -1,0 +1,45 @@
+# 套书 hanshu_wyg（前漢書文淵閣本，写本）的缺省参数。
+# 2026-11-06 三套书切分可共用盘点：这些开关原先在 01–10 册 yaml 里逐册各写一遍、值全同，11–42 册一个都没有。
+# 收到这里以后，凡是 `seg_set: hanshu_wyg` 的册自动带上；01–10 册 yaml 里同值的行留着也不冲突（册配置压过本文件、值相同），
+# 生效参数与指纹都不变，SJ 可以随手删掉。
+# 参数层（低 → 高）：Step 默认 < 管线 yaml params: < 本文件 < 册配置 params:（book_defaults.yaml ∪ 册 yaml）< 运行覆盖。
+# 只放「写本切分代码在缺省情况下该用什么值」；数据文件路径（roster_ref_corpus／roster_ref_pins、page_pins）、
+# 逐册不同的（印章页、vline_overrides）照旧写册配置。各开关的来历见 doc/开关登记表.md。
+params:
+  border_detect:
+    top_weak_ratio: 0.45       # 框条下细虚线、首行字顶齐平：上框弱线护栏门槛（殿本 0.3）
+    top_weak_floor: 0.25
+  column_warp:
+    tight_rule_band: true      # 字贴界行写，判带收紧，不连左偏旁一起抹
+    det_warp: true             # 列射影 numpy 双精度、跨 CPU 逐位一致（Sheldon 11-06 三书全开）；k11 从中心库 book_defaults 挪来（A22 开关收敛 11-13）
+  cell_shrink:
+    frame_line_max_off: 0.35   # 全页框线线位只认贴着版框的（列尾字脚齐平会被当第二、三道框线）
+    jiazhu_end_halves: true    # 列端雙行小注格两半各剥框渣
+    jiazhu_strip_rules: true   # 列端夹注格也剥框线、长竖线
+    inner_frame_only: true     # 与 inner_frame_cut 同开：拟出内框线那一边不再逐格剥框线
+    inner_frame_keep_cross: true   # 字脚压内框线，穿线笔画留着
+    manual_ink_fit: true       # 定框列每格先在框内收墨再外扩、框外抹白（cv #1405，SJ 11-10）；k11 从 42 册 yaml 收来
+    # inner_frame_cut：cv #1154 起缺省开，k11 把 42 册 yaml 里的 true 删了，这里也不写
+  row_segment:
+    cut_judge: unet_f64        # 切点判官 torch 双精度（同 det_warp）；k11 从中心库 book_defaults 挪来
+    snap_cut: 0.4              # 格线劈字修法（cv #1490，v0.7.25 起）：42 册强档劈字 49→0、中档 247→122（A22 11-13）
+    cut_gap_guard: 0.08        # 格线劈上字伸出的戈钩／长捺：改选零墨缝（cv #1606，A22 11-17；k24 起，要 cv ≥0.7.57）
+    cut_free_seam: 0.35        # 零墨折线候选，只修墨大半在上格的块（cv #1624，A22 11-17：42 册 82 页切坏 72→54、新劈 0；k24 起）
+    cut_gap_keep_glyph: true   # cut_gap_guard 换过去的线不许劈开原线没劈的字（戈钩内侧白走廊，代/或/實；cv #1632，A22 11-17；k25 起，要 cv ≥0.7.59）
+    cut_white_row: 0.35        # 仍劈字时挪到 ±0.35 格内最近的整行白，护字内白缝（cv #1632；k25 起）
+    straight_seam_ink: true    # 直线候选 seam_ink 记真墨，只是记录（cv #1632；k25 起）
+    cut_glyph_line: 0.35       # 上下字交错按连通块归属逐列画线（cv #1638，SJ 切分线 11-17：103 页切坏线 105→77、新劈 0；k26 起，要 cv ≥0.7.61）
+    row_pitch: free
+    layout_slots_grow: true    # 双行小注列 22–24 行时按实际行数放格（cv #870）
+    layout_gap_cols_empty: true
+    jiazhu_rows: true
+    # jiazhu_free_split／jiazhu_step_split／seal_gap_slots_empty／seal_inkcut：k2（2026-11-10）起是本书代码
+    # （code/jiazhu_step.py、code/seal_ink.py），不再是开关；册配置里留着 true 也不冲突
+    alt_cut: true
+    header_ref_flag: true
+    roster_top_dash: true
+    roster_seal_despeckle: 6   # 大印压着的卷端标题列去印点（cv #864）
+    roster_seal_trim_extra: 4
+  seed_admit:
+    group_flow_exclude: ["shi", "mn"]   # k28（11-26）：mn 组 ids 模板来自殿本、对写本不准（蒙→𫎇 全书 5 格看图都是蒙，A24 CV4 清单 前漢書mn组改字5格.tsv），加 mn 退出 group_flow；k22（11-16 r75）：勢/𫝑 本书刻形不可分，shi 组退出 group_flow（宁可送审／随整理本；A24 定，cv #1601，≥0.7.50）；r74 全书 25 格 ids 改出 𫝑
+    semantic_extra: "圗=圖"    # k19（11-16 v0.1 验收轮）：VariantMap 缺 圗/圖，补语义对；字形层照刻形写 圗（cv #1580，≥0.7.45；收 r71 剩的 圗 8 格）

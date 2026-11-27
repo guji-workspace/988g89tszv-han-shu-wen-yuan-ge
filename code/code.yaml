@@ -1,0 +1,12 @@
+# 本书的书级代码（open-guji-cv ≥0.7.0 挂成 guji_book.hanshu_wyg）。设计：cv doc/design/书级代码.md。
+# 改了本目录的代码：本仓提交 → guji code release -w <本仓根> 出 releases/k<N+1>.json → 打 tag k<N+1>。
+name: hanshu_wyg            # ＝册配置的 seg_set
+base: keben
+cv: ">=0.7.80"         # 汉书 k1（11-27，CV2 定）：起点同史记 k27 线；cv 钉与史记同一条线
+overrides:
+  keben.roster_segment: roster_segment
+  keben.roster_glyph: roster_glyph
+  keben.jiazhu_step: jiazhu_step     # 雙行小注逐步切＋两行字数可不等（free_split）
+  keben.seal_ink: seal_ink           # 大印下剔印泥、表中间空格位记空
+  keben.patch_clean: patch_clean     # 发前清格：抹邻格残笔、界行、列端版框横线（格框格号不动）
+  keben.follow_ref_hooks: follow_ref_rival   # follow_ref 领先差：同族异体不当对手（k9，cv#1517 钩子）

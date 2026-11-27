@@ -1,0 +1,5 @@
+# 前漢書文淵閣本（写本）的切分样页单。先行册 2、6、26 试跑前先留空，试跑叠图看过后再补问题页。
+# 册 yaml 要写 `seg_set: hanshu_wyg`（书仓 code/ 的书级代码）。
+pipeline: keben_body_v2
+steps: {from: border_detect, to: cell_shrink}
+books: []
