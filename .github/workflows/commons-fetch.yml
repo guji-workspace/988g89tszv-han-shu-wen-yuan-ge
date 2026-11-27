@@ -1,0 +1,38 @@
+name: commons-fetch
+# 云端会话访问 Commons 会 429，借 GitHub runner 下载原图，传成 artifact（保留 2 天）。
+on:
+  workflow_dispatch:
+    inputs:
+      vols:
+        description: "册号，逗号分隔，如 0249,0250,0251"
+        default: "0249,0250,0251"
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - run: sudo apt-get update -q && sudo apt-get install -y -q djvulibre-bin
+      - name: download
+        run: |
+          mkdir -p out
+          for v in $(echo "${{ inputs.vols }}" | tr ',' ' '); do
+            name="文淵閣四庫全書_${v}冊.djvu"
+            enc=$(python3 -c "import urllib.parse,sys;print(urllib.parse.quote(sys.argv[1]))" "$name")
+            api=$(curl -s -A "han-shu-wyg-fetch/1.0 (https://github.com/guji-workspace)" "https://commons.wikimedia.org/w/api.php?action=query&titles=File:${enc}&prop=imageinfo&iiprop=url|sha1|size&format=json")
+            url=$(echo "$api" | python3 -c "import sys,json;d=json.load(sys.stdin);print(list(d['query']['pages'].values())[0]['imageinfo'][0]['url'])")
+            sha1=$(echo "$api" | python3 -c "import sys,json;d=json.load(sys.stdin);print(list(d['query']['pages'].values())[0]['imageinfo'][0]['sha1'])")
+            echo "$v $url $sha1"
+            for i in 1 2 3 4 5; do
+              curl -sS -L -A "han-shu-wyg-fetch/1.0 (https://github.com/guji-workspace)" -o "out/${v}.djvu" "$url" && break
+              sleep $((i*20))
+            done
+            got=$(sha1sum "out/${v}.djvu" | cut -d' ' -f1)
+            echo "$v sha1 want=$sha1 got=$got pages=$(djvused out/${v}.djvu -e n)" | tee -a out/report.txt
+            [ "$got" = "$sha1" ] || { echo "sha1 不一致"; exit 1; }
+            sha256sum "out/${v}.djvu" | tee -a out/sha256.txt
+          done
+      - uses: actions/upload-artifact@v4
+        with:
+          name: commons-djvu
+          path: out/
+          retention-days: 2
+          compression-level: 0
