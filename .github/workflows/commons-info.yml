@@ -1,0 +1,13 @@
+name: commons-info
+on: workflow_dispatch
+jobs:
+  info:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          for n in 0249 0250 0251; do
+            curl -s -A "guji-wyg/1.0 (open-guji project)" -G "https://commons.wikimedia.org/w/api.php" \
+              --data-urlencode "action=query" --data-urlencode "format=json" --data-urlencode "formatversion=2" \
+              --data-urlencode "titles=File:文淵閣四庫全書 ${n}冊.djvu" --data-urlencode "prop=imageinfo" \
+              --data-urlencode "iiprop=url|sha1|size|timestamp" | python3 -c "import sys,json; p=json.load(sys.stdin)['query']['pages'][0]; ii=p['imageinfo'][0]; print('INFO'+json.dumps({'n':'$n','title':p['title'],'url':ii['url'].split('?')[0],'sha1':ii['sha1'],'size':ii['size'],'timestamp':ii['timestamp']}, ensure_ascii=False))"
+          done
