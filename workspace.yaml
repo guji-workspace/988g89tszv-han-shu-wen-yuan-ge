@@ -6,6 +6,7 @@ id: 988g89tszv
 glyph_lib:
   auto_backfill: true    # 11-27 用户定：文渊阁一套写本共用一个库，匹配上（参校本＋库）的放行格直接回库，不再逐字人审
   text_check: report
-  # A 组（11-27 CV3 定）：只借史记 g30 的人裁刻例（scope: human，不借 7 万条里 4.5 万机器补例）；B 组基线为不写 borrow。
+  # 11-28 起改借文渊阁组库 glyphlib-wyg-v1（用户 11-28 定并发版；史记人裁＋汉书回库，14743 例）。借法按 GM2：不写 pin、不写 scope（共享库 provenance 是 promote，写 scope: human 会借不到）。
+  # 原 A 组借法（史记 g30 human）已整条替换，不并存。
   borrow:
-    - {from: 988g3f0wsu, scope: human, pin: 30}
+    - {from: glyphlib-wyg-v1}
